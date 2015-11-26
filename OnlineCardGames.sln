@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCardGames", "OnlineCardGames\OnlineCardGames.csproj", "{75DF19D8-C786-41A0-9F93-B3270C461CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCardGames.Data", "OnlineCardGames.Data\OnlineCardGames.Data.csproj", "{0DD49880-BE27-48B8-A4E9-D99D5A2910D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCardGames.Entities", "OnlineCardGames.Entities\OnlineCardGames.Entities.csproj", "{10DFA95C-6FBF-45BF-A407-612A240C1D00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCardGames.Logic", "OnlineCardGames.Logic\OnlineCardGames.Logic.csproj", "{1C3F02F0-7095-4B99-8964-556D7109885B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCardGames.Tests", "OnlineCardGames.Tests\OnlineCardGames.Tests.csproj", "{63252B11-7D56-4925-94D8-1A7030DE2782}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75DF19D8-C786-41A0-9F93-B3270C461CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DF19D8-C786-41A0-9F93-B3270C461CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DF19D8-C786-41A0-9F93-B3270C461CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DF19D8-C786-41A0-9F93-B3270C461CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DD49880-BE27-48B8-A4E9-D99D5A2910D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DD49880-BE27-48B8-A4E9-D99D5A2910D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DD49880-BE27-48B8-A4E9-D99D5A2910D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DD49880-BE27-48B8-A4E9-D99D5A2910D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10DFA95C-6FBF-45BF-A407-612A240C1D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DFA95C-6FBF-45BF-A407-612A240C1D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DFA95C-6FBF-45BF-A407-612A240C1D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DFA95C-6FBF-45BF-A407-612A240C1D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C3F02F0-7095-4B99-8964-556D7109885B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C3F02F0-7095-4B99-8964-556D7109885B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C3F02F0-7095-4B99-8964-556D7109885B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C3F02F0-7095-4B99-8964-556D7109885B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63252B11-7D56-4925-94D8-1A7030DE2782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63252B11-7D56-4925-94D8-1A7030DE2782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63252B11-7D56-4925-94D8-1A7030DE2782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63252B11-7D56-4925-94D8-1A7030DE2782}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
