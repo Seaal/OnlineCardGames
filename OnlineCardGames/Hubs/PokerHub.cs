@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlineCardGames.Hubs
 {
+    [Authorize]
     public class PokerHub : Hub
     {
         public override Task OnConnected()
