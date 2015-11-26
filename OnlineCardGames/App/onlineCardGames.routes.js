@@ -12,6 +12,11 @@
                 url: "/",
                 templateUrl: "App/home.view.html",
                 controller: "homeController as home"
+            })
+            .state("newGame", {
+                url: "/newGame",
+                templateUrl: "App/newGame.view.html",
+                controller: "newGameController as newGame"
             });
     }
 

@@ -211,6 +211,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\home.controller.js" />
+    <Content Include="App\newGame.controller.js" />
+    <Content Include="App\newGame.view.html" />
     <Content Include="App\onlineCardGames.module.js" />
     <Content Include="App\onlineCardGames.routes.js" />
     <Content Include="Content\bootstrap-theme.css" />
