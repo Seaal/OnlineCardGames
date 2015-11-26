@@ -37,8 +37,24 @@ namespace OnlineCardGames
                  "~/Content/bootstrap.css",
                  "~/Content/Site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/app").IncludeDirectory(
-                "~/App", "*.js", true));
+            ScriptBundle angularBundle = new ScriptBundle("~/bundles/app");
+            angularBundle.IncludeDirectory("~/App", "*.js", true);
+            angularBundle.Orderer = new AngularBundleOrderer();
+
+            bundles.Add(angularBundle);
+        }
+    }
+
+    public class AngularBundleOrderer : IBundleOrderer
+    {
+        public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
+        {
+            List<BundleFile> newFiles = new List<BundleFile>(files.Count());
+
+            newFiles.AddRange(files.Where(f => f.IncludedVirtualPath.EndsWith(".module.js")));
+            newFiles.AddRange(files.Where(f => !f.IncludedVirtualPath.EndsWith(".module.js")));
+
+            return newFiles;
         }
     }
 }
