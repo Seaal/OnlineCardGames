@@ -4,7 +4,7 @@
         .module("onlineCardGames")
         .controller("newGameController", NewGameController);
 
-    function NewGameController() {
+    function NewGameController(pushService) {
         var vm = this;
 
         vm.name = "";
@@ -13,7 +13,13 @@
         vm.createGame = createGame;
 
         function createGame() {
-            console.log("I was clicked!");
+            var game = {
+                name: vm.name,
+                initialChipCount: vm.chipCount,
+                maxPlayers: vm.maxPlayers
+            };
+
+            pushService.createGame(game);
         }
     }
 

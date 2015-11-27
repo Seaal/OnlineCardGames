@@ -5,7 +5,8 @@
 <button class="btn btn-success" ui-sref="newGame">Create New Game! <i class="fa fa-lg fa-trophy"></i></button>
 
 <ul>
-    <li>
-
+    <li ng-repeat="game in home.games track by game.Id">
+        {{game.Name}} - <i class="fa fa-users" title="Players"></i> {{game.Players.length}} / {{game.MaxPlayers}} - Hand: {{game.HandNumber}}
+        <button class="btn btn-primary" ui-sref="game({id: game.Id})">Join Game</button>
     </li>
 </ul>

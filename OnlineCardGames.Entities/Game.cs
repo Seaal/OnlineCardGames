@@ -15,5 +15,10 @@ namespace OnlineCardGames.Entities
 
         public int HandNumber { get; set; }
         public List<Player> Players { get; set; }
+
+        public Game()
+        {
+            Players = new List<Player>();
+        }
     }
 }

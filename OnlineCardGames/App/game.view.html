@@ -1,0 +1,24 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Game {{game.id}}
+    </div>
+
+    <div class="panel-body">
+
+        <p>Position: {{game.me.Position}}</p>
+        <p>Chips: {{game.me.Chips}}</p>
+
+        <div class="panel">
+            <div class="panel-heading">
+                Messages
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="message in game.messages">{{message.text}}</li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>

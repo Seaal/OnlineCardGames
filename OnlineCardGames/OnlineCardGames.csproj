@@ -211,6 +211,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\game.controller.js" />
+    <Content Include="App\game.view.html" />
     <Content Include="App\home.controller.js" />
     <Content Include="App\newGame.controller.js" />
     <Content Include="App\newGame.view.html" />

@@ -7,9 +7,14 @@
     function HomeController($scope, pushService) {
         var vm = this;
         vm.onlinePlayers = 0;
+        vm.games = [];
 
-        pushService.on("numberOfPlayersOnline", function (onlinePlayers) {
+        pushService.on("updateOnlinePlayers", function (onlinePlayers) {
             vm.onlinePlayers = onlinePlayers;
+        });
+
+        pushService.on("updateGameList", function(games) {
+            vm.games = games;
         });
 
         pushService.initialise().then(function () {

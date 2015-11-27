@@ -9,6 +9,8 @@
         var service = {
             initialise: initialise,
             joinLobby: joinLobby,
+            joinGame: joinGame,
+            createGame: createGame,
             on: on
         };
         var connection = $.hubConnection();
@@ -21,6 +23,14 @@
 
         function joinLobby() {
             proxy.invoke("joinLobby");
+        }
+
+        function joinGame(id) {
+            return $q.when(proxy.invoke("joinGame", id));
+        }
+
+        function createGame(game) {
+            proxy.invoke("createGame", game);
         }
 
         function on(eventName, callback) {

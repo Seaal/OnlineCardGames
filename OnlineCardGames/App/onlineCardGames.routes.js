@@ -16,12 +16,12 @@
             .state("newGame", {
                 url: "/newGame",
                 templateUrl: "App/newGame.view.html",
-                controller: "newGameController as newGame",
-                resolve: {
-                    lobbyStatus: function() {
-                        
-                    }
-                }
+                controller: "newGameController as newGame"
+            })
+            .state("game", {
+                url: "/game/{id}",
+                templateUrl: "App/game.view.html",
+                controller: "gameController as game"
             });
     }
 
