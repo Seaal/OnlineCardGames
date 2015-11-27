@@ -56,10 +56,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PokerLogic\HandValueServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineCardGames.Data\OnlineCardGames.Data.csproj">
+      <Project>{0dd49880-be27-48b8-a4e9-d99d5a2910d6}</Project>
+      <Name>OnlineCardGames.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineCardGames.Entities\OnlineCardGames.Entities.csproj">
+      <Project>{10dfa95c-6fbf-45bf-a407-612a240c1d00}</Project>
+      <Name>OnlineCardGames.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OnlineCardGames.Logic\OnlineCardGames.Logic.csproj">
+      <Project>{1c3f02f0-7095-4b99-8964-556d7109885b}</Project>
+      <Name>OnlineCardGames.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
