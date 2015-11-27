@@ -19,7 +19,7 @@
                 controller: "newGameController as newGame"
             })
             .state("game", {
-                url: "/game/{id}",
+                url: "/game/{id:int}",
                 templateUrl: "App/game.view.html",
                 controller: "gameController as game"
             });

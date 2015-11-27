@@ -6,7 +6,7 @@
 
     function GameController($stateParams, pushService) {
         var vm = this;
-        vm.id = parseInt($stateParams.id);
+        vm.id = $stateParams.id;
         vm.messages = [];
         vm.me = {};
 
