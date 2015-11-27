@@ -11,14 +11,11 @@
             joinLobby: joinLobby,
             on: on
         };
+        var connection = $.hubConnection();
 
-        var proxy;
+        var proxy = connection.createHubProxy("pokerHub");
 
         function initialise() {
-            var connection = $.hubConnection();
-            
-            proxy = connection.createHubProxy("pokerHub");
-
             return $q.when(connection.start());
         }
 

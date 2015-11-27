@@ -8,11 +8,11 @@
         var vm = this;
         vm.onlinePlayers = 0;
 
-        pushService.initialise().then(function () {
-            pushService.on("numberOfPlayersOnline", function(onlinePlayers) {
-                vm.onlinePlayers = onlinePlayers;
-            });
+        pushService.on("numberOfPlayersOnline", function (onlinePlayers) {
+            vm.onlinePlayers = onlinePlayers;
+        });
 
+        pushService.initialise().then(function () {
             pushService.joinLobby();
         });
     }

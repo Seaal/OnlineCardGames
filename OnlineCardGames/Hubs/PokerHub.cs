@@ -4,34 +4,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace OnlineCardGames.Hubs
 {
     [Authorize]
     public class PokerHub : Hub<IPokerHubClient>
     {
-        private static int clientsOnline = 0;
+        private static readonly Dictionary<string, HashSet<string>> UserClientMap = new Dictionary<string, HashSet<string>>();
 
         public override Task OnConnected()
         {
+            string userName = Context.User.Identity.GetUserName();
+
+            if (!UserClientMap.ContainsKey(userName))
+            {
+                UserClientMap.Add(userName, new HashSet<string>());
+            }
+
+            UserClientMap[userName].Add(Context.ConnectionId);
+
+            Clients.Group("lobby").NumberOfPlayersOnline(UserClientMap.Count());
+
             return base.OnConnected();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            return base.OnDisconnected(stopCalled);
-        }
+            string userName = Context.User.Identity.GetUserName();
 
-        public override Task OnReconnected()
-        {
-            return base.OnReconnected();
+            if (UserClientMap.ContainsKey(userName))
+            {
+                UserClientMap[userName].Remove(Context.ConnectionId);
+
+                if (!UserClientMap[userName].Any())
+                {
+                    UserClientMap.Remove(userName);
+                }
+            }
+
+            return base.OnDisconnected(stopCalled);
         }
 
         public async Task JoinLobby()
         {
-            clientsOnline++;
             await Groups.Add(Context.ConnectionId, "lobby");
-            Clients.Group("lobby").NumberOfPlayersOnline(clientsOnline);
+            Clients.Caller.NumberOfPlayersOnline(UserClientMap.Count());
         }
     }
 }
