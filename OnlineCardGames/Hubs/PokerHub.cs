@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 namespace OnlineCardGames.Hubs
 {
     [Authorize]
-    public class PokerHub : Hub
+    public class PokerHub : Hub<IPokerHubClient>
     {
+        private static int clientsOnline = 0;
+
         public override Task OnConnected()
         {
             return base.OnConnected();
@@ -23,6 +25,13 @@ namespace OnlineCardGames.Hubs
         public override Task OnReconnected()
         {
             return base.OnReconnected();
+        }
+
+        public async Task JoinLobby()
+        {
+            clientsOnline++;
+            await Groups.Add(Context.ConnectionId, "lobby");
+            Clients.Group("lobby").NumberOfPlayersOnline(clientsOnline);
         }
     }
 }

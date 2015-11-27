@@ -9,6 +9,7 @@
 
         vm.name = "";
         vm.chipCount = 1500;
+        vm.maxPlayers = 6;
         vm.createGame = createGame;
 
         function createGame() {

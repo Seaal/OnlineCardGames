@@ -200,6 +200,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\IPokerHubClient.cs" />
     <Compile Include="Hubs\PokerHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -213,8 +214,10 @@
     <Content Include="App\home.controller.js" />
     <Content Include="App\newGame.controller.js" />
     <Content Include="App\newGame.view.html" />
+    <Content Include="App\onlineCardGames.constants.js" />
     <Content Include="App\onlineCardGames.module.js" />
     <Content Include="App\onlineCardGames.routes.js" />
+    <Content Include="App\signalr.service.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
