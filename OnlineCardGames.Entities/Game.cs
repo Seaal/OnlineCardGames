@@ -13,11 +13,14 @@ namespace OnlineCardGames.Entities
         public int InitialChipCount { get; set; }
         public int MaxPlayers { get; set; }
 
-        public int HandNumber { get; set; }
+        public int HandNumber => Hands.Count;
+
+        public List<Hand> Hands { get; set; }
         public List<Player> Players { get; set; }
 
         public Game()
         {
+            Hands = new List<Hand>();
             Players = new List<Player>();
         }
     }

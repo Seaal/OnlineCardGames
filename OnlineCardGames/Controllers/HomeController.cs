@@ -11,10 +11,6 @@ namespace OnlineCardGames.Controllers
     {
         public ActionResult Index()
         {
-            GameLogicService logicService = new GameLogicService();
-
-            IList<Card> cards = logicService.GetNewDeck();
-            ViewBag.Cards = cards;
             return View();
         }
     }

@@ -4,7 +4,7 @@
         .module("onlineCardGames")
         .controller("newGameController", NewGameController);
 
-    function NewGameController(pushService) {
+    function NewGameController($state, pushService) {
         var vm = this;
 
         vm.name = "";
@@ -19,7 +19,9 @@
                 maxPlayers: vm.maxPlayers
             };
 
-            pushService.createGame(game);
+            pushService.createGame(game).then(function(gameId) {
+                $state.go("game", { id: gameId });
+            });
         }
     }
 

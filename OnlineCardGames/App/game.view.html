@@ -8,6 +8,10 @@
         <p>Position: {{game.me.Position}}</p>
         <p>Chips: {{game.me.Chips}}</p>
 
+        <p ng-repeat="card in game.hand">
+            {{card.Suit}} {{card.Number}}
+        </p>
+
         <div class="panel">
             <div class="panel-heading">
                 Messages

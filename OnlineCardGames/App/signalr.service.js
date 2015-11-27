@@ -30,7 +30,7 @@
         }
 
         function createGame(game) {
-            proxy.invoke("createGame", game);
+            return $q.when(proxy.invoke("createGame", game));
         }
 
         function on(eventName, callback) {

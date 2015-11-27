@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.AspNet.Identity;
 using OnlineCardGames.Entities;
+using OnlineCardGames.Logic;
 
 namespace OnlineCardGames.Hubs
 {
@@ -13,7 +15,14 @@ namespace OnlineCardGames.Hubs
     public class PokerHub : Hub<IPokerHubClient>
     {
         private static readonly Dictionary<string, HashSet<string>> UserClientMap = new Dictionary<string, HashSet<string>>();
-        private static readonly List<Game> Games = new List<Game>(); 
+        private static readonly List<Game> Games = new List<Game>();
+
+        private readonly GameLogicService _gameLogicService;
+
+        public PokerHub()
+        {
+            _gameLogicService = new GameLogicService();
+        }
 
         public override Task OnConnected()
         {
@@ -48,11 +57,13 @@ namespace OnlineCardGames.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-        public void CreateGame(Game game)
+        public int CreateGame(Game game)
         {
             game.Id = Games.Count() + 1;
             Games.Add(game);
             Clients.Group("lobby").UpdateGameList(Games);
+
+            return game.Id;
         }
 
         public async Task JoinLobby()
@@ -91,17 +102,74 @@ namespace OnlineCardGames.Hubs
             Player player = new Player()
             {
                 Chips = game.InitialChipCount,
-                Id = game.Players.Count() + 1,
-                Position = game.Players.Count(),
+                Id = game.Players.Count + 1,
+                Position = game.Players.Count,
                 UserName = userName
             };
 
             game.Players.Add(player);
 
-            Clients.OthersInGroup("game-" + id).SendGameMessage(new { text = userName + " has joined the game!"});
-            Clients.Caller.SendGameMessage(new { text = "You have joined the game!"});
+            Clients.OthersInGroup("game-" + id).SendGameMessage(new { text = userName + " has joined the game!" });
+            Clients.Caller.SendGameMessage(new { text = "You have joined the game!" });
+
+            if (game.Players.Count == game.MaxPlayers)
+            {
+                StartGame(game);
+            }
 
             return player;
+        }
+
+        private void StartGame(Game game)
+        {
+            Clients.Group("game-" + game.Id).SendGameMessage(new { text = "Game is starting." });
+
+            NextHand(game);
+        }
+
+        private void NextHand(Game game)
+        {
+            Hand hand = _gameLogicService.NextHand(game);
+
+            Clients.Group("game-" + game.Id).SendGameMessage(new { text = "Hand " + game.HandNumber + " starting." });
+
+            foreach (PlayerHand playerHand in hand.PlayerHands)
+            {
+                if (UserClientMap.ContainsKey(playerHand.Player.UserName))
+                {
+                    List<string> connections = UserClientMap[playerHand.Player.UserName].ToList();
+
+                    string yourHandCardsMessage = playerHand.Cards.Aggregate("", (current, card) => current + card + ", ");
+
+                    yourHandCardsMessage = yourHandCardsMessage.Remove(yourHandCardsMessage.Length - 2);
+
+                    Clients.Clients(connections).SendGameMessage(new { text = "Your hand: " + yourHandCardsMessage });
+                    Clients.Clients(connections).SendHand(playerHand.Cards);
+                }
+
+            }
+
+            hand.Stage = Stage.PreFlop;
+
+            Timer timer = new Timer(3000);
+
+            timer.Elapsed += delegate { OnNextStage(game, hand, timer); };
+            timer.Enabled = true;
+        }
+
+        private void OnNextStage(Game game, Hand hand, Timer timer)
+        {
+            if (hand.Stage != Stage.End)
+            {
+                string message = _gameLogicService.ProcessNextStage(hand);
+
+                Clients.Group("game-" + game.Id).SendGameMessage(new { text = message });
+            }
+            else
+            {
+                timer.Enabled = false;
+                NextHand(game);
+            }
         }
     }
 }

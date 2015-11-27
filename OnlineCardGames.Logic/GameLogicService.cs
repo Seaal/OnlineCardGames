@@ -2,6 +2,7 @@
 using OnlineCardGames.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace OnlineCardGames.Logic
         private readonly IPlayerHandRepository _playerHandRepository;
 
         private static readonly int CardsPerPlayerHand = 2;
+        private static readonly int FlopSize = 3;
+        private static readonly int TurnSize = 1;
+        private static readonly int RiverSize = 1;
 
         public GameLogicService(/*IRandomNumberGenerator randomNumberGenerator, IGameRepository gameRepository, IHandRepository handRepository, IPlayerRepository playerRepository,
                                 IPlayerHandRepository playerHandRepository*/)
@@ -28,49 +32,119 @@ namespace OnlineCardGames.Logic
             //_playerHandRepository = playerHandRepository;
         }
 
-        public Game ProcessGame(int gameId)
+        public Hand NextHand(Game game)
         {
-            Game game = _gameRepository.Get(gameId);
+            Random random = new Random();
 
-            Hand currentHand = _handRepository.GetCurrentHandForGame(game.Id);
-
-            switch(currentHand.Stage)
+            Hand hand = new Hand()
             {
-                case Stage.Start:
-                    ProcessStart(game, currentHand);
-                    break;
+                Id = game.HandNumber + 1,
+                Stage = Stage.Start
+            };
+
+            Hand previousHand = GetPreviousHand(game);
+
+            if (previousHand == null)
+            {
+                hand.BigBlind = game.InitialChipCount / 50;
+                hand.SmallBlind = game.InitialChipCount / 100;
+                hand.Dealer = random.Next(game.Players.Count);
+            }
+            else
+            {
+                hand.BigBlind = previousHand.BigBlind;
+                hand.SmallBlind = previousHand.SmallBlind;
+                hand.Dealer = (previousHand.Dealer + 1) % game.Players.Count;
             }
 
-            return game;
-        }
+            game.Hands.Add(hand);
 
-        public void ProcessStart(Game game, Hand currentHand)
-        {
-            game.HandNumber++;
+            hand.Deck = GetNewDeck();
 
-            IList<Player> players = _playerRepository.GetPlayersForGame(game.Id);
-
-            IList<Card> deck = GetNewDeck();
-
-            foreach(Player player in players)
+            foreach (Player player in game.Players)
             {
                 PlayerHand playerHand = new PlayerHand()
                 {
-                    PlayerId = player.Id,
-                    HandId = currentHand.Id,
+                    Player = player,
+                    Hand = hand,
                     HasFolded = false
                 };
 
-                for(int i=0;i<CardsPerPlayerHand;i++)
+                for (int i = 0; i < CardsPerPlayerHand; i++)
                 {
-                    playerHand.Cards.Add(DrawCard(deck));
+                    playerHand.Cards.Add(DrawCard(hand.Deck, random));
                 }
 
-                _playerHandRepository.Add(playerHand);
+                hand.PlayerHands.Add(playerHand);
+            }
+
+            return hand;
+        }
+
+        private Hand GetPreviousHand(Game game)
+        {
+            return game.Hands.LastOrDefault();
+        }
+
+        public string ProcessNextStage(Hand hand)
+        {
+            switch (hand.Stage)
+            {
+                case Stage.PreFlop:
+                    hand.Stage = Stage.Flop;
+                    return "PreFlop Betting goes here";
+                case Stage.Flop:
+                case Stage.Turn:
+                case Stage.River:
+                    return ProcessDrawStage(hand);
+                default:
+                    return "Fuck";
             }
         }
 
-        public IList<Card> GetNewDeck()
+        private string ProcessDrawStage(Hand hand)
+        {
+            Random random = new Random();
+
+            int cardsToDraw;
+            string stageName;
+
+            switch (hand.Stage)
+            {
+                case Stage.Flop:
+                    cardsToDraw = FlopSize;
+                    stageName = "Flop";
+                    hand.Stage = Stage.Turn;
+                    break;
+                case Stage.Turn:
+                    cardsToDraw = TurnSize;
+                    stageName = "Turn";
+                    hand.Stage = Stage.River;
+                    break;
+                case Stage.River:
+                    cardsToDraw = RiverSize;
+                    stageName = "River";
+                    hand.Stage = Stage.End;
+                    break;
+                default:
+                    throw new InvalidOperationException("Not a draw stage");
+            }
+
+            List<Card> cardsToAdd = new List<Card>(cardsToDraw);
+
+            for (int i = 0; i < cardsToDraw; i++)
+            {
+                cardsToAdd.Add(DrawCard(hand.Deck, random));
+            }
+
+            string drawMessage = cardsToAdd.Aggregate("", (current, card) => current + card + ", ");
+
+            drawMessage = drawMessage.Remove(drawMessage.Length - 2);
+
+            return stageName + ": " + drawMessage;
+        }
+
+        private List<Card> GetNewDeck()
         {
             List<Card> deck = new List<Card>(52);
 
@@ -105,9 +179,9 @@ namespace OnlineCardGames.Logic
             return deck;
         }
 
-        public Card DrawCard(IList<Card> deck)
+        private Card DrawCard(IList<Card> deck, Random random)
         {
-            int cardNumber = _randomNumberGenerator.GetRandomNumber(0, deck.Count);
+            int cardNumber = random.Next(deck.Count);
 
             Card drawnCard = deck.ElementAt(cardNumber);
             deck.RemoveAt(cardNumber);

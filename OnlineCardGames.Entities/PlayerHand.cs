@@ -9,14 +9,14 @@ namespace OnlineCardGames.Entities
 
     public class PlayerHand
     {
-        public int PlayerId { get; set; }
-        public int HandId { get; set; }
+        public Player Player { get; set; }
+        public Hand Hand { get; set; }
         public List<Card> Cards { get; set; }
         public bool HasFolded { get; set; }
 
         public PlayerHand()
         {
-            Cards = new List<Card>(2);
+            Cards = new List<Card>();
         }
     }
 }

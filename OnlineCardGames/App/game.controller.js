@@ -9,9 +9,14 @@
         vm.id = $stateParams.id;
         vm.messages = [];
         vm.me = {};
+        vm.hand = [];
 
         pushService.on("sendGameMessage", function(message) {
             vm.messages.push(message);
+        });
+
+        pushService.on("sendHand", function(hand) {
+            vm.hand = hand;
         });
 
         pushService.initialise().then(function () {

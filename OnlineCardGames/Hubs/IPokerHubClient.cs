@@ -12,5 +12,6 @@ namespace OnlineCardGames.Hubs
         void UpdateOnlinePlayers(int number);
         void UpdateGameList(List<Game> games);
         void SendGameMessage(Object message);
+        void SendHand(List<Card> playerHand);
     }
 }
