@@ -31,7 +31,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.RoyalFlush, 14, 13, 12, 11, 10));
+            handValue.Type.Should().Be(HandValue.HandType.RoyalFlush);
+            handValue.Kickers.Should().ContainInOrder(14, 13, 12, 11, 10);
         }
 
         [Test]
@@ -56,7 +57,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.StraightFlush, 10, 9, 8, 7, 6));
+            handValue.Type.Should().Be(HandValue.HandType.StraightFlush);
+            handValue.Kickers.Should().ContainInOrder(10, 9, 8, 7, 6);
         }
 
         [Test]
@@ -81,7 +83,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.FourOfAKind, 10, 10, 10, 10, 12));
+            handValue.Type.Should().Be(HandValue.HandType.FourOfAKind);
+            handValue.Kickers.Should().ContainInOrder(10, 10, 10, 10, 12);
         }
 
         [Test]
@@ -106,7 +109,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.FourOfAKind, 2, 2, 2, 7, 7));
+            handValue.Type.Should().Be(HandValue.HandType.FullHouse);
+            handValue.Kickers.Should().ContainInOrder(2, 2, 2, 7, 7);
         }
 
         [Test]
@@ -157,7 +161,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.Straight, 8, 7, 6, 5, 4));
+            handValue.Type.Should().Be(HandValue.HandType.Straight);
+            handValue.Kickers.Should().ContainInOrder(8, 7, 6, 5, 4);
         }
 
         [Test]
@@ -182,7 +187,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.ThreeOfAKind, 14, 14, 14, 12, 7));
+            handValue.Type.Should().Be(HandValue.HandType.ThreeOfAKind);
+            handValue.Kickers.Should().ContainInOrder(14, 14, 14, 12, 7);
         }
 
         [Test]
@@ -207,7 +213,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.TwoPair, 5, 5, 3, 3, 11));
+            handValue.Type.Should().Be(HandValue.HandType.TwoPair);
+            handValue.Kickers.Should().ContainInOrder(5, 5, 3, 3, 11);
         }
 
         [Test]
@@ -232,7 +239,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.Pair, 2, 2, 14, 11, 10));
+            handValue.Type.Should().Be(HandValue.HandType.Pair);
+            handValue.Kickers.Should().ContainInOrder(2, 2, 14, 11, 10);
         }
 
         [Test]
@@ -257,7 +265,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.HighCard, 14, 11, 10, 9, 6));
+            handValue.Type.Should().Be(HandValue.HandType.HighCard);
+            handValue.Kickers.Should().ContainInOrder(14, 11, 10, 9, 6);
         }
     }
 }
