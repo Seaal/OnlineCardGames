@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.AspNet.Identity;
@@ -202,7 +200,10 @@ namespace OnlineCardGames.Hubs
                     Clients.Group("game-" + game.Id).SendGameMessage(new { text = bestHandPlayer.UserName + " won this hand with " + bestHand });
                 }
 
-                NextHand(game);
+                timer = new Timer(3000);
+                timer.Elapsed += delegate { NextHand(game); };
+                timer.AutoReset = false;
+                timer.Enabled = true;
             }
         }
     }
