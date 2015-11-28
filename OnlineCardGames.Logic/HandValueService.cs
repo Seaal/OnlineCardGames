@@ -57,7 +57,7 @@ namespace OnlineCardGames.Logic
             }
 
             if (flushResult.IsType)
-            {
+            {  
                 return GetHandValue(HandValue.HandType.Flush, flushResult.Cards.Take(5).ToList(), cards);
             }
 

@@ -142,5 +142,14 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             (royalFlush > straightFlush).Should().BeTrue();
         }
+
+        [Test]
+        public void HighCard_Shouldnt_Beat_Pair()
+        {
+            HandValue highCard = new HandValue(HandValue.HandType.HighCard, 14, 12, 11, 10, 9);
+            HandValue pair = new HandValue(HandValue.HandType.Pair, 2, 2, 3, 4, 5);
+
+            (highCard > pair).Should().BeFalse();
+        }
     }
 }

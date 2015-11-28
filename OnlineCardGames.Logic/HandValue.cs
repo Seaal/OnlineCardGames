@@ -77,6 +77,11 @@ namespace OnlineCardGames.Logic
                 return true;
             }
 
+            if (left.GetTypeValue() < right.GetTypeValue())
+            {
+                return false;
+            }
+
             for (int i = 0; i < left.Kickers.Length; i++)
             {
                 if (left.Kickers[i] > right.Kickers[i])
@@ -97,6 +102,11 @@ namespace OnlineCardGames.Logic
             if (left.GetTypeValue() < right.GetTypeValue())
             {
                 return true;
+            }
+
+            if (left.GetTypeValue() > right.GetTypeValue())
+            {
+                return false;
             }
 
             for (int i = 0; i < left.Kickers.Length; i++)
