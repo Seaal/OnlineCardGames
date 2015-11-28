@@ -58,7 +58,7 @@ namespace OnlineCardGames.Logic
 
             if (flushResult.IsType)
             {
-                return GetHandValue(HandValue.HandType.Flush, flushResult.Cards, cards);
+                return GetHandValue(HandValue.HandType.Flush, flushResult.Cards.Take(5).ToList(), cards);
             }
 
             HandTypeResult straightResult = IsStraight(cards);

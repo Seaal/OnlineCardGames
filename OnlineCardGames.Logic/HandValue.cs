@@ -41,6 +41,35 @@ namespace OnlineCardGames.Logic
             return (int) Type;
         }
 
+        public override string ToString()
+        {
+            switch (Type)
+            {
+                case HandType.RoyalFlush:
+                    return "a royal flush!";
+                case HandType.StraightFlush:
+                    return "a " + Kickers[0] + " high straight flush";
+                case HandType.FourOfAKind:
+                    return "a four of a kind: " + Kickers[0] + "s";
+                case HandType.FullHouse:
+                    return " a full house: " + Kickers[0] + " full of " + Kickers[3];
+                case HandType.Flush:
+                    return " a " + Kickers[0] + " high flush";
+                case HandType.Straight:
+                    return " a " + Kickers[0] + " high straight";
+                case HandType.ThreeOfAKind:
+                    return " a three of a kind: " + Kickers[0] + "s";
+                case HandType.TwoPair:
+                    return " a two pair: " + Kickers[0] + "s and " + Kickers[2] + "s";
+                case HandType.Pair:
+                    return "a pair of " + Kickers[0] + "s";
+                case HandType.HighCard:
+                    return Kickers[0] + " high";
+            }
+
+            throw new InvalidOperationException("Not a valid result");
+        }
+
         public static bool operator >(HandValue left, HandValue right)
         {
             if (left.GetTypeValue() > right.GetTypeValue())

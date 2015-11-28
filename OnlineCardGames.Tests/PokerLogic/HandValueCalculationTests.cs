@@ -268,5 +268,31 @@ namespace OnlineCardGames.Tests.PokerLogic
             handValue.Type.Should().Be(HandValue.HandType.HighCard);
             handValue.Kickers.Should().ContainInOrder(14, 11, 10, 9, 6);
         }
+
+        [Test]
+        public void When_6_Of_One_Suit_Should_Return_Flush_With_Highest_5_Kickers()
+        {
+            HandValueService handValueService = new HandValueService();
+
+            List<Card> playerCards = new List<Card>()
+            {
+                new Card() { Number = 9, Suit = Suit.Diamonds },
+                new Card() { Number = 10, Suit = Suit.Diamonds }
+            };
+
+            List<Card> board = new List<Card>()
+            {
+                new Card() { Number = 6, Suit = Suit.Spades },
+                new Card() { Number = 6, Suit = Suit.Diamonds },
+                new Card() { Number = 2, Suit = Suit.Diamonds },
+                new Card() { Number = 4, Suit = Suit.Diamonds },
+                new Card() { Number = 14, Suit = Suit.Diamonds}
+            };
+
+            HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
+
+            handValue.Type.Should().Be(HandValue.HandType.Flush);
+            handValue.Kickers.Should().ContainInOrder(14, 10, 9, 6, 4);
+        }
     }
 }
