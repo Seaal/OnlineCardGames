@@ -7,7 +7,7 @@ using OnlineCardGames.Logic;
 namespace OnlineCardGames.Tests.PokerLogic
 {
     [TestFixture]
-    public class HandValueServiceTests
+    public class HandValueCalculationTests
     {
         [Test]
         public void Should_Return_Royal_Flush()

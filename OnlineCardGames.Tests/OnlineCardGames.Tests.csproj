@@ -56,7 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PokerLogic\HandValueServiceTests.cs" />
+    <Compile Include="PokerLogic\HandValueComparisonTests.cs" />
+    <Compile Include="PokerLogic\HandValueCalculationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
