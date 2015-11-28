@@ -131,7 +131,8 @@ namespace OnlineCardGames.Tests.PokerLogic
 
             HandValue handValue = handValueService.CalculateHandValue(playerCards, board);
 
-            handValue.Should().BeSameAs(new HandValue(HandValue.HandType.Flush, 12, 9, 7, 6, 2));
+            handValue.Type.Should().Be(HandValue.HandType.Flush);
+            handValue.Kickers.Should().ContainInOrder(12, 9, 7, 6, 2);
         }
 
         [Test]

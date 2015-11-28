@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameLogicService.cs" />
+    <Compile Include="HandTypeResult.cs" />
     <Compile Include="HandValue.cs" />
     <Compile Include="HandValueService.cs" />
     <Compile Include="IRandomNumberGenerator.cs" />
