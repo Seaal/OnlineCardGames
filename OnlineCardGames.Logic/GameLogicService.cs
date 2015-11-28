@@ -11,25 +11,13 @@ namespace OnlineCardGames.Logic
 {
     public class GameLogicService
     {
-        private readonly IRandomNumberGenerator _randomNumberGenerator;
-        private readonly IGameRepository _gameRepository;
-        private readonly IHandRepository _handRepository;
-        private readonly IPlayerRepository _playerRepository;
-        private readonly IPlayerHandRepository _playerHandRepository;
-
         private static readonly int CardsPerPlayerHand = 2;
         private static readonly int FlopSize = 3;
         private static readonly int TurnSize = 1;
         private static readonly int RiverSize = 1;
 
-        public GameLogicService(/*IRandomNumberGenerator randomNumberGenerator, IGameRepository gameRepository, IHandRepository handRepository, IPlayerRepository playerRepository,
-                                IPlayerHandRepository playerHandRepository*/)
+        public GameLogicService()
         {
-            //_randomNumberGenerator = randomNumberGenerator;
-            //_gameRepository = gameRepository;
-            //_handRepository = handRepository;
-            //_playerRepository = playerRepository;
-            //_playerHandRepository = playerHandRepository;
         }
 
         public Hand NextHand(Game game)
@@ -136,6 +124,8 @@ namespace OnlineCardGames.Logic
             {
                 cardsToAdd.Add(DrawCard(hand.Deck, random));
             }
+
+            hand.Board.AddRange(cardsToAdd);
 
             string drawMessage = cardsToAdd.Aggregate("", (current, card) => current + card + ", ");
 

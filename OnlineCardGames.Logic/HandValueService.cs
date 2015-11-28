@@ -7,7 +7,7 @@ using OnlineCardGames.Entities;
 
 namespace OnlineCardGames.Logic
 {
-    public class HandValueService
+    public class HandValueService : IHandValueService
     {
         public HandValue CalculateHandValue(List<Card> playerCards, List<Card> board)
         {

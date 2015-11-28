@@ -18,10 +18,12 @@ namespace OnlineCardGames.Hubs
         private static readonly List<Game> Games = new List<Game>();
 
         private readonly GameLogicService _gameLogicService;
+        private readonly IHandValueService _handValueService;
 
         public PokerHub()
         {
             _gameLogicService = new GameLogicService();
+            _handValueService = new HandValueService();
         }
 
         public override Task OnConnected()
@@ -59,7 +61,7 @@ namespace OnlineCardGames.Hubs
 
         public int CreateGame(Game game)
         {
-            game.Id = Games.Count() + 1;
+            game.Id = Games.Count + 1;
             Games.Add(game);
             Clients.Group("lobby").UpdateGameList(Games);
 
@@ -168,6 +170,38 @@ namespace OnlineCardGames.Hubs
             else
             {
                 timer.Enabled = false;
+
+                Player bestHandPlayer = null;
+                HandValue bestHand = null;
+
+                foreach (PlayerHand playerHand in hand.PlayerHands)
+                {
+                    if (playerHand.HasFolded)
+                    {
+                        return;
+                    }
+
+                    HandValue handValue = _handValueService.CalculateHandValue(playerHand.Cards, hand.Board);
+
+                    if (bestHand == null)
+                    {
+                        bestHand = handValue;
+                        bestHandPlayer = playerHand.Player;
+                    }
+                    else if(handValue > bestHand)
+                    {
+                        bestHand = handValue;
+                        bestHandPlayer = playerHand.Player;
+                    }
+
+                    Clients.Group("game-" + game.Id).SendGameMessage(new { text = playerHand.Player.UserName + " has revealed "  + handValue });
+                }
+
+                if (bestHandPlayer != null && bestHand != null)
+                {
+                    Clients.Group("game-" + game.Id).SendGameMessage(new { text = bestHandPlayer.UserName + " won this hand with " + bestHand });
+                }
+
                 NextHand(game);
             }
         }
